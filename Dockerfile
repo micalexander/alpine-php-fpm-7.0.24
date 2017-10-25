@@ -216,6 +216,7 @@ RUN apk add --no-cache \
     autoconf \
     curl-dev \
     libxml2-dev \
+    tzdata \
     && \
     docker-php-ext-configure gd \
       --with-freetype-dir=$PREFIX_DIR/include/ \
@@ -242,6 +243,7 @@ RUN pecl install \
   yaml-2.0.0 \
   xdebug
 
+RUN echo "date.timezone = \"\${TZ}\"" >> $PREFIX_DIR/etc/php/conf.d/php.ini
 RUN echo "extension=yaml.so" >> $PREFIX_DIR/etc/php/conf.d/php.ini
 RUN echo "zend_extension=${PREFIX_DIR}/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so" >> $PREFIX_DIR/etc/php/conf.d/php.ini
 RUN echo "xdebug.remote_enable=on" >> $PREFIX_DIR/etc/php/conf.d/php.ini
